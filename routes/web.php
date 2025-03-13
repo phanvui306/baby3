@@ -1,10 +1,12 @@
 <?php
 
+require __DIR__ . '/api.php';
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlindboxController;
 use App\Http\Controllers\TeddyController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/search', [HomeController::class, 'search'])->name('search');
@@ -23,3 +25,5 @@ use App\Http\Controllers\CollectionController;
 
 Route::get('/collection-dashboard', [CollectionController::class, 'index'])->name('collection-dashboard');
 Route::get('/collection/{id}', [CollectionController::class, 'show'])->name('collection.show');
+
+Route::get('danh-muc', [CategoryController::class, 'store']);
