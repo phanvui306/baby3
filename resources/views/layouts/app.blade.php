@@ -16,7 +16,7 @@
 </head>
 <body>
     <div class="container">
-        <a class="navbar-brand" href="#">SĂN NGAY   SUPER SALE UP TO 50%    SĂN NGAY</a>
+        <h1 class="text-center">SĂN NGAY SUPER SALE UP TO 50% SĂN NGAY</h1>
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -32,17 +32,20 @@
         <div class="container">
             <a class="navbar-brand" href="#">0473625112</a>
         </div>
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('register') }}">Đăng ký</a>
+            <a class="navbar-brand" href="{{ route('login') }}">Đăng nhập</a>
+        </div>
     </nav>
 
     <div class="container mt-3">
         <ul class="nav nav-pills justify-content-center bg-light p-3 rounded">
-            <li class="nav-item"><a class="nav-link active" href="#">Blind Box</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Gấu Teddy</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Bộ Sưu Tập</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ route('blindbox') }}">Blind Box</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('teddy') }}">Gấu Teddy</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('collection-dashboard') }}">Bộ Sưu Tập</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Gấu Hoạt Hình</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Thú Bông</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Phụ Kiện</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Hoa Gấu Bông</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Góc Của Gấu</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Dịch vụ</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Tất cả SP</a></li>
