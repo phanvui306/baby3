@@ -12,4 +12,8 @@ class Category extends Model
     protected $table = 'danh_muc'; // Tên bảng trong database
 
     protected $fillable = ['tendanhmuc'];
+
+    public function sanpham(){
+        return $this->hasMany(sanpham::class, 'iddanhmuc');
+    }
 }

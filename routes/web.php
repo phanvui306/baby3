@@ -22,8 +22,14 @@ Route::get('/teddy', [TeddyController::class, 'index'])->name('teddy');
 Route::get('/teddy/{id}', [TeddyController::class, 'show'])->name('teddy.show');
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\SanPhamController;
 
 Route::get('/collection-dashboard', [CollectionController::class, 'index'])->name('collection-dashboard');
 Route::get('/collection/{id}', [CollectionController::class, 'show'])->name('collection.show');
 
-Route::get('danh-muc', [CategoryController::class, 'store']);
+Route::get('/test-api', function () {
+    return view('test');
+});
+Route::get('/san-pham/create', [SanPhamController::class, 'create'])->name('sanpham.create'); // Hiển thị form
+Route::post('/san-pham', [SanPhamController::class, 'store'])->name('sanpham.store'); // Xử lý lưu sản phẩm
+
