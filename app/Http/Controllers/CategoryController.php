@@ -12,12 +12,15 @@ class CategoryController extends Controller
     // lấy danh sách danh mục
     public function index()
     {
-
-        $categories = Category::all();
-        return view('dsdanhmuc', compact('categories'));
-        // return response()->json(Category::all(), 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json([
+            'danhmucs' => Category::all()
+        ], 200, [], JSON_UNESCAPED_UNICODE);
     }
 
+    public function viewDanhMuc()
+    {
+        return view('dsdanhmuc');
+    }
     //
     public function them()
     {
@@ -40,17 +43,7 @@ class CategoryController extends Controller
     }
 
 
-    public function edit($id)
-    {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return response()->json([
-                'message' => 'Danh mục không tồn tại'
-            ], 404);
-        }
-        return view('editDanhmuc');
-    }
+    public function edit($id) {}
     public function update(Request $request, $id)
     {
 

@@ -30,6 +30,13 @@ Route::get('/collection/{id}', [CollectionController::class, 'show'])->name('col
 Route::get('/test-api', function () {
     return view('test');
 });
-Route::get('/san-pham/create', [SanPhamController::class, 'create'])->name('sanpham.create'); // Hiển thị form
-Route::post('/san-pham', [SanPhamController::class, 'store'])->name('sanpham.store'); // Xử lý lưu sản phẩm
+
+
+//Admin
+Route::get('/danhmuc/view', [CategoryController::class, 'viewDanhMuc']);
+
+
+Route::get('/products', function () {
+    return view('layouts.angular'); // Hiển thị view products.blade.php
+});
 
