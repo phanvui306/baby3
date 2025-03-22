@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th3 13, 2025 lúc 03:22 PM
+-- Thời gian đã tạo: Th3 22, 2025 lúc 06:47 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -95,16 +95,19 @@ INSERT INTO `chi_tiet_don_hang` (`id`, `soluong`, `dongia`, `iddonhang`, `idbien
 
 CREATE TABLE `danh_muc` (
   `id` int(11) NOT NULL,
-  `tendanhmuc` varchar(50) NOT NULL
+  `tendanhmuc` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `danh_muc`
 --
 
-INSERT INTO `danh_muc` (`id`, `tendanhmuc`) VALUES
-(1, 'Gấu bông'),
-(2, 'Phụ kiện');
+INSERT INTO `danh_muc` (`id`, `tendanhmuc`, `created_at`, `updated_at`) VALUES
+(1, 'Gấu bông', '2025-03-22 05:22:35', '2025-03-22 05:22:35'),
+(2, 'Phụ kiện', '2025-03-22 05:22:35', '2025-03-22 05:22:35'),
+(3, '\'[[[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]', '2025-03-21 22:22:44', '2025-03-21 22:40:57');
 
 -- --------------------------------------------------------
 
@@ -230,7 +233,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('OC7LqZZfZ4gswdLAduxyoNzIeZwJ0NxYCPFUuVe9', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQkpnTEdzRjJ0WnFheUVOVkpxS1ZvZlJkbDd0RXpXT2dGcXM2Y0FzUSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYW5oLW11YyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1741875434);
+('02XgaTxC1BNkQtMLhKeg4ju4pciLXqC7WsBBlKop', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNFEzWHdaVjQ3UUtPUlRlbEdKV1RIMDVhM1hzODVGaFNUb3RxWjFtNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYW5obXVjL3N1YS83Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1742622145);
 
 -- --------------------------------------------------------
 
@@ -359,7 +362,7 @@ ALTER TABLE `chi_tiet_don_hang`
 -- AUTO_INCREMENT cho bảng `danh_muc`
 --
 ALTER TABLE `danh_muc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `don_hang`
