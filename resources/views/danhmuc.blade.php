@@ -9,7 +9,7 @@
 
     <h2>Thêm danh mục</h2>
 
-    <form action="{{ url('/danh-muc') }}" method="POST">
+    <form action="{{ route('danhmuc.store') }}" method="POST">
         @csrf  {{-- Bắt buộc để tránh lỗi 419 --}}
         <label for="tendanhmuc">Tên danh mục:</label>
         <input type="text" name="tendanhmuc" id="tendanhmuc" required>
