@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/api.php';
+// require __DIR__ . '/api.php';
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
@@ -22,6 +22,7 @@ Route::get('/teddy', [TeddyController::class, 'index'])->name('teddy');
 Route::get('/teddy/{id}', [TeddyController::class, 'show'])->name('teddy.show');
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SanPhamController;
 
 Route::get('/collection-dashboard', [CollectionController::class, 'index'])->name('collection-dashboard');
@@ -33,10 +34,16 @@ Route::get('/test-api', function () {
 
 
 //Admin
-Route::get('/danhmuc/view', [CategoryController::class, 'viewDanhMuc']);
+Route::get('/danhmuc', [CategoryController::class, 'viewDanhMuc']);
 
+Route::get('/danhmuc/create', [CategoryController::class, 'viewThemDanhMuc'])->name('danhmuc.create');
 
-Route::get('/products', function () {
-    return view('layouts.angular'); // Hiển thị view products.blade.php
+Route::get('/danhmuc/edit', function () {
+    return view('admin.update_danhmuc');
 });
+
+
+Route::get('/products', [ProductController::class, 'viewProduct']);
+
+
 

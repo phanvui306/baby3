@@ -11,16 +11,16 @@
     <h1>Danh sách danh mục</h1>
     <ul>
         <li ng-repeat="category in categories">
-            {{ category.name }}
+            {{ category.tendanhmuc }}
         </li>
     </ul>
 
     <script>
         var app = angular.module('myApp', []);
         app.controller('CategoryController', function($scope, $http) {
-            $http.get('api.json')
+            $http.get('http://127.0.0.1:8000/api/categories')
             .then(function(response) {
-                $scope.categories = response.data;
+                $scope.categories = response.data.danhmucs;
             }, function(error) {
                 console.error('Lỗi khi tải danh mục:', error);
             });

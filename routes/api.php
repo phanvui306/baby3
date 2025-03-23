@@ -1,29 +1,31 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use App\Models\Category;
 
-// Route::get('/testsssssssss', function (Request $request) {
-//     return response()->json(['message' => 'API hoat dong binh thuongggggg!']);
-// });
-
-Route::get('/danhmuc', [CategoryController::class, 'index']);
-
-// Route::get('/danhmuc/them', [CategoryController::class, 'them'])->name('danhmuc.them');
-Route::post('/danhmuc', [CategoryController::class, 'store'])->name('danhmuc.store');
-
-Route::get('/danhmuc/sua/{id}', [CategoryController::class, 'edit'])->name('danhmuc.sua');
-Route::put('/danhmuc/{id}', [CategoryController::class, 'update'])->name('danhmuc.update');
-
-Route::delete('/danhmuc/{id}', [CategoryController::class, 'destroy']);
 
 
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
 
-
-
-Route::get('/productss', function () {
-    return response()->json(Category::all());
+Route::get('/test', function () {
+    return response()->json([
+        'message' => 'API hoạt động thành công!',
+        'status' => 200
+    ], 200);
 });
+
+
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::put('/categories/{id}', [CategoryController::class, 'update']);
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
+

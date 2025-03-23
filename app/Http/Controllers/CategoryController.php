@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Response; //
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
@@ -12,9 +13,11 @@ class CategoryController extends Controller
     // lấy danh sách danh mục
     public function index()
     {
+        $danhmuc = Category::all();
         return response()->json([
-            'danhmucs' => Category::all()
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+            'success' => true,
+            'danhmucs' => $danhmuc
+        ]);
     }
 
     public function viewDanhMuc()
@@ -26,34 +29,38 @@ class CategoryController extends Controller
     {
         return view('danhmuc'); // Trả về view thêm danh mục
     }
-    //Them danh muc
+
+    // Hiển thị trang thêm danh mục
+    public function viewThemDanhMuc()
+    {
+        return view('admin.createDanhMuc');
+    }
+    // Thêm danh mục
     public function store(Request $request)
     {
         $request->validate([
             'tendanhmuc' => 'required|string|max:255',
         ]);
+
         $danhmuc = Category::create([
             'tendanhmuc' => $request->tendanhmuc,
         ]);
-
         return response()->json([
             'message' => 'Them danh muc thanh cong',
             'danhmuc' => $danhmuc,
         ], 201);
     }
 
-
-    public function edit($id) {}
+    // Sửa danh mục
     public function update(Request $request, $id)
     {
-
         $category = Category::find($id);
+
         if (!$category) {
             return response()->json([
-                'message' => 'Danh muc không tồn tại'
+                'message' => 'danh muc khong ton tai',
             ], 404);
         }
-
         $request->validate([
             'tendanhmuc' => 'required|string|max:255',
         ]);
@@ -63,25 +70,26 @@ class CategoryController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Cap nhat danh muc thanh cong',
-            'data' => $category
+            'message' => 'cap nhat danh muc thanh cong',
+
         ], 200);
     }
-    // xoa danh muc
+
+
     public function destroy($id)
     {
         $category = Category::find($id);
 
         if (!$category) {
             return response()->json([
-                'message' => 'Danh muc khong ton tai'
+                'message' => 'Danh muc khong ton tai',
             ], 404);
         }
 
         $category->delete();
 
         return response()->json([
-            'message' => ' Xoa danh muc thanh cong'
+            'message' => 'Xoa danh muc thanh cong',
         ], 200);
     }
 }
