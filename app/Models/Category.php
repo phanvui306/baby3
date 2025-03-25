@@ -9,11 +9,12 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'danh_muc'; // Tên bảng trong database
+    protected $table = 'danh_muc'; // Khai báo tên bảng trong database
 
-    protected $fillable = ['tendanhmuc'];
+    protected $fillable = ['tendanhmuc']; // Các cột có thể thêm/sửa
 
-    public function sanpham(){
-        return $this->hasMany(sanpham::class, 'iddanhmuc');
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'iddanhmuc');
     }
 }

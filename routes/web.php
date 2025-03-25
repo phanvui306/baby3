@@ -44,6 +44,7 @@ Route::get('/danhmuc/edit', function () {
 
 
 Route::get('/products', [ProductController::class, 'viewProduct']);
-
+Route::get('/products/create', [ProductController::class, 'viewThemProduct'])->name('products.create');
+Route::get('product/edit/', [ProductController::class, 'viewEditProduct']);
 
 

@@ -20,12 +20,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat='sp in sanphams'>
-                <td>@{{ sp.id }}</td>
-                <td>@{{ sp.tensanpham }}</td>
+            <tr ng-repeat='product in sanphams'>
+                <td>@{{ product.id }}</td>
+                <td>@{{ product.tensanpham }}</td>
                 <td>
-                    <a href="/danhmuc/edit?id= @{{ danhmuc.id }}"><button>Sửa</button></a>
-                    <button ng-click="xoaDanhMuc(danhmuc.id)">Xóa</button>
+                    <a href="/product/edit?id=@{{ product.id }}"><button>Sửa</button></a>
+                    <button ng-click="xoaDanhMuc(product.id)">Xóa</button>
                 </td>
             </tr>
         </tbody>
