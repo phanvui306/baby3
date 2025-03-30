@@ -17,4 +17,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'iddanhmuc');
     }
+
+    public function hinhAnh()
+    {
+        return $this->hasMany(Image::class, 'idsp');
+    }
 }

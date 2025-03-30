@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
@@ -29,8 +30,14 @@ Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products', [ProductController::class, 'store']);
 
+Route::get('products/{id}', [ProductController::class, 'show']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::delete('/product/{id}', [ProductController::class,'destroy']);
 
+// hình ảnh
+Route::get('/image', [ImageController::class,'index']);
+Route::post('/image', [ImageController::class,'themHinhAnh']);
+Route::put('/image/{id}', [ImageController::class, 'suaHinhAnh']);
 
 Route::prefix('admin')->group(function (): void {
     Route::get('/orders', [OrderController::class, 'index']);

@@ -25,7 +25,7 @@
                 <td>@{{ product.tensanpham }}</td>
                 <td>
                     <a href="/product/edit?id=@{{ product.id }}"><button>Sửa</button></a>
-                    <button ng-click="xoaDanhMuc(product.id)">Xóa</button>
+                    <button ng-click="xoaSanPham(product.id)">Xóa</button>
                 </td>
             </tr>
         </tbody>
@@ -33,17 +33,33 @@
 
     <script>
         var app = angular.module('myApp', []);
-
+    
         app.controller('SanPhamController', function($scope, $http){
+            // Lấy danh sách sản phẩm từ API
             $http.get('http://127.0.0.1:8000/api/products')
             .then(function(response){
                 $scope.sanphams = response.data;
             }, function(error){
-                console.log('Loi khi goi api', error);
+                console.log('Lỗi khi gọi API', error);
             });
+    
+            // Hàm xóa sản phẩm
+            $scope.xoaSanPham = function(id){
+                if(confirm("Bạn có chắc muốn xoá sản phẩm này không?")){
+                    $http.delete("http://127.0.0.1:8000/api/product/" + id)
+                    .then(function(response){
+                        alert("Xóa sản phẩm thành công!");
+                        // Cập nhật danh sách sản phẩm sau khi xóa
+                        $scope.sanphams = $scope.sanphams.filter(p => p.id !== id);
+                    })
+                    .catch(function(error){
+                        console.error("Lỗi khi xoá sản phẩm", error);
+                    });
+                }
+            };
         });
-        
     </script>
+    
 </body>
 
 </html>

@@ -22,8 +22,10 @@ Route::get('/teddy', [TeddyController::class, 'index'])->name('teddy');
 Route::get('/teddy/{id}', [TeddyController::class, 'show'])->name('teddy.show');
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SanPhamController;
+use Illuminate\Routing\Router;
 
 Route::get('/collection-dashboard', [CollectionController::class, 'index'])->name('collection-dashboard');
 Route::get('/collection/{id}', [CollectionController::class, 'show'])->name('collection.show');
@@ -43,8 +45,12 @@ Route::get('/danhmuc/edit', function () {
 });
 
 
+
+
 Route::get('/products', [ProductController::class, 'viewProduct']);
 Route::get('/products/create', [ProductController::class, 'viewThemProduct'])->name('products.create');
 Route::get('product/edit/', [ProductController::class, 'viewEditProduct']);
-
+Route::get('/image/create', [ImageController::class,'viewThemImage']);
+route::get('image', [ImageController::class,'viewHinhAnh']);
+Route::get('image/edit', [ImageController::class,'viewEditImage']);
 

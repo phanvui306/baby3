@@ -14,6 +14,12 @@
     <label for="tensanpham">Tên sản phẩm</label>
     <input type="text" ng-model="product.tensanpham" placeholder="Nhập tên sản phẩm">
 
+    <label for="tensanpham">Loại sản phẩm</label>
+    <select name="" id="" ng-model="product.sphot">
+        <option value="1">Có</option>
+        <option value="0">không</option>
+    </select>
+
     <label for="mota">Mô tả</label>
     <textarea ng-model="product.mota" placeholder="Nhập mô tả"></textarea>
 
@@ -47,7 +53,7 @@
             // Lấy thông tin sản phẩm cần sửa
             $http.get('http://127.0.0.1:8000/api/products/' + id)
                 .then(function(response) {
-                    $scope.product = response.data.product;
+                    $scope.product = response.data;
                 })
                 .catch(function(error) {
                     console.log("Lỗi khi lấy thông tin sản phẩm", error);

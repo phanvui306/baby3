@@ -108,7 +108,7 @@ class ProductController extends Controller
     $product->update([
         'tensanpham' => $request->tensanpham,
         'mota' => $request->mota,
-        'sphot' => $request->sphot ?? $product->sphot,
+        'sphot' => (int) $request->sphot,
         'iddanhmuc' => $request->iddanhmuc
     ]);
 
@@ -125,6 +125,16 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json([
+                'message' => 'Sản phẩm không tồn tại'
+            ], 404);
+        }
+        $product->delete();
+        return response()->json([
+            'message'=> 'Xoá sản phẩm thành công',
+        ], 200 );
     }
 }
