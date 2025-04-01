@@ -22,4 +22,9 @@ class Product extends Model
     {
         return $this->hasMany(Image::class, 'idsp');
     }
+
+    public function variants()
+    {
+        return $this->hasMany(BienThe::class, 'idsp');
+    }
 }

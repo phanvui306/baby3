@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Response; //
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\BienThe;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -34,29 +35,32 @@ class ProductController extends Controller
     }
     public function store(Request $request)
     {
-        try {
-            // Kiểm tra đầu vào
-            $validatedData = $request->validate([
-                'tensanpham' => 'required|string|max:255',
-                'mota' => 'nullable|string',
-                'sphot' => 'nullable|string',
-                'iddanhmuc' => 'required|exists:danh_muc,id' // Chú ý kiểm tra đúng bảng
-            ]);
+        // Validate dữ liệu
+        $validated = $request->validate([
+            'tensanpham' => 'required|string|max:255',
+            'mota' => 'required|string',
+            'iddanhmuc' => 'required|integer|exists:danh_muc,id',
+            'variants' => 'required|array',  // Đảm bảo có ít nhất một biến thể
+            'variants.*.mau' => 'required|string|max:50',
+            'variants.*.kichco' => 'required|string|max:50',
+            'variants.*.gia' => 'required|integer',
+        ]);
 
-            // Tạo sản phẩm
-            $product = Product::create($validatedData);
+        // Tạo sản phẩm mới
+        $product = Product::create([
+            'tensanpham' => $validated['tensanpham'],
+            'mota' => $validated['mota'],
+            'iddanhmuc' => $validated['iddanhmuc'],
+        ]);
 
-            return response()->json([
-                'message' => 'Thêm sản phẩm thành công',
-                'product' => $product,
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Lỗi khi thêm sản phẩm',
-                'error' => $e->getMessage(),
-            ], 500);
+        // Tạo biến thể cho sản phẩm
+        foreach ($validated['variants'] as $variantData) {
+            $product->variants()->create($variantData);
         }
+
+        return response()->json(['message' => 'Sản phẩm và biến thể đã được tạo thành công!'], 201);
     }
+
 
 
     /**
@@ -85,39 +89,48 @@ class ProductController extends Controller
         return view('admin.update_sanpham');
     }
     public function update(Request $request, $id)
-{
-    // Tìm sản phẩm theo ID
-    $product = Product::find($id);
-    
-    // Nếu không tìm thấy sản phẩm
-    if (!$product) {
+    {
+        // Tìm sản phẩm theo ID
+        $product = Product::find($id);
+
+        // Nếu không tìm thấy sản phẩm
+        if (!$product) {
+            return response()->json([
+                'message' => 'Sản phẩm không tồn tại!'
+            ], 404);
+        }
+
+        // Kiểm tra dữ liệu đầu vào
+        $request->validate([
+            'tensanpham' => 'required|string|max:255',
+            'mota' => 'nullable|string',
+            'sphot' => 'nullable|string',
+            'iddanhmuc' => 'required|exists:danh_muc,id',
+            'variants' => 'required|array|min:1',
+            'variants.*.mau' => 'required|string',
+            'variants.*.kichco' => 'required|string',
+            'variants.*.gia' => 'required|numeric',
+        ]);
+
+        // Cập nhật sản phẩm
+        $product->update([
+            'tensanpham' => $request->tensanpham,
+            'mota' => $request->mota,
+            'sphot' => (int) $request->sphot,
+            'iddanhmuc' => $request->iddanhmuc
+        ]);
+
+        $product->variants()->delete();
+        foreach($request->variants as $bienthe){
+            $product->variants()->create($bienthe);
+        }
+
+        // Trả về phản hồi JSON
         return response()->json([
-            'message' => 'Sản phẩm không tồn tại!'
-        ], 404);
+            'message' => 'Cập nhật sản phẩm thành công!',
+            'product' => $product
+        ], 200);
     }
-
-    // Kiểm tra dữ liệu đầu vào
-    $request->validate([
-        'tensanpham' => 'required|string|max:255',
-        'mota' => 'nullable|string',
-        'sphot' => 'nullable|string',
-        'iddanhmuc' => 'required|exists:danh_muc,id'
-    ]);
-
-    // Cập nhật sản phẩm
-    $product->update([
-        'tensanpham' => $request->tensanpham,
-        'mota' => $request->mota,
-        'sphot' => (int) $request->sphot,
-        'iddanhmuc' => $request->iddanhmuc
-    ]);
-
-    // Trả về phản hồi JSON
-    return response()->json([
-        'message' => 'Cập nhật sản phẩm thành công!',
-        'product' => $product
-    ], 200);
-}
 
 
     /**
@@ -134,7 +147,7 @@ class ProductController extends Controller
         }
         $product->delete();
         return response()->json([
-            'message'=> 'Xoá sản phẩm thành công',
-        ], 200 );
+            'message' => 'Xoá sản phẩm thành công',
+        ], 200);
     }
 }

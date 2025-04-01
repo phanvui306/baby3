@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 use App\Models\Category;
 
 
@@ -45,3 +46,7 @@ Route::prefix('admin')->group(function (): void {
     Route::put('/orders/{id}', [OrderController::class, 'update']);
     Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 });
+
+
+//đơn hàng
+Route::get('/orders', [OrderController::class, 'index']);

@@ -23,6 +23,7 @@ Route::get('/teddy/{id}', [TeddyController::class, 'show'])->name('teddy.show');
 
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SanPhamController;
 use Illuminate\Routing\Router;
@@ -43,6 +44,8 @@ Route::get('/danhmuc/create', [CategoryController::class, 'viewThemDanhMuc'])->n
 Route::get('/danhmuc/edit', function () {
     return view('admin.update_danhmuc');
 });
+
+Route::get('/orders', [ OrderController::class, 'viewDonHang']);
 
 
 
