@@ -71,20 +71,22 @@
 
             // Thêm sản phẩm
             $scope.themSanPham = () => {
-                if ($scope.sanpham.variants.length === 0) {
-                    alert('Vui lòng thêm ít nhất một biến thể');
-                    return;
-                }
+    if ($scope.sanpham.variants.length === 0) {
+        alert('Vui lòng thêm ít nhất một biến thể');
+        return;
+    }
 
-                $http.post('/api/products', $scope.sanpham)
-                    .then(() => {
-                        $scope.thanhCong = 'Sản phẩm đã được tạo thành công!';
-                        $scope.sanpham = {
-                            variants: []
-                        }; // Reset form
-                    })
-                    .catch(error => alert('Có lỗi xảy ra: ' + error.message));
-            };
+    $http.post('http://127.0.0.1:8000/api/products', $scope.sanpham)
+        .then(function(response) {
+            $scope.thanhCong = 'Sản phẩm đã được tạo thành công!';
+            $scope.sanpham = { variants: [] }; // Reset form
+        })
+        .catch(function(error) {
+            console.error('Có lỗi xảy ra:', error);
+            alert('Có lỗi xảy ra: ' + error.message);
+        });
+};
+
         });
     </script>
 
