@@ -103,7 +103,7 @@
             $scope.suaSanPham = function() {
                 // gửi yêu cầu
 
-                $http.put('http://127.0.0.1:8000/api/products/' + $productId, $scope.sanpham)
+                $http.put('http://127.0.0.1:8000/api/products/' + productId, $scope.sanpham)
                     .then(function(response) {
                         alert('Cập nhật sản phẩm thành công');
                         $scope.thanhCong = 'Cập nhật sản phẩm thành công!';

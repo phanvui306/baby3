@@ -89,48 +89,52 @@ class ProductController extends Controller
         return view('admin.update_sanpham');
     }
     public function update(Request $request, $id)
-    {
-        // Tìm sản phẩm theo ID
-        $product = Product::find($id);
+{
+    // Tìm sản phẩm theo ID
+    $product = Product::find($id);
 
-        // Nếu không tìm thấy sản phẩm
-        if (!$product) {
-            return response()->json([
-                'message' => 'Sản phẩm không tồn tại!'
-            ], 404);
-        }
-
-        // Kiểm tra dữ liệu đầu vào
-        $request->validate([
-            'tensanpham' => 'required|string|max:255',
-            'mota' => 'nullable|string',
-            'sphot' => 'nullable|string',
-            'iddanhmuc' => 'required|exists:danh_muc,id',
-            'variants' => 'required|array|min:1',
-            'variants.*.mau' => 'required|string',
-            'variants.*.kichco' => 'required|string',
-            'variants.*.gia' => 'required|numeric',
-        ]);
-
-        // Cập nhật sản phẩm
-        $product->update([
-            'tensanpham' => $request->tensanpham,
-            'mota' => $request->mota,
-            'sphot' => (int) $request->sphot,
-            'iddanhmuc' => $request->iddanhmuc
-        ]);
-
-        $product->variants()->delete();
-        foreach($request->variants as $bienthe){
-            $product->variants()->create($bienthe);
-        }
-
-        // Trả về phản hồi JSON
+    // Nếu không tìm thấy sản phẩm
+    if (!$product) {
         return response()->json([
-            'message' => 'Cập nhật sản phẩm thành công!',
-            'product' => $product
-        ], 200);
+            'message' => 'Sản phẩm không tồn tại!'
+        ], 404);
     }
+
+    // Kiểm tra dữ liệu đầu vào
+    $validated = $request->validate([
+        'tensanpham' => 'required|string|max:255',
+        'mota' => 'nullable|string',
+        'sphot' => 'nullable|string',
+        'iddanhmuc' => 'required|exists:danh_muc,id',
+        'variants' => 'nullable|array', // Không yêu cầu biến thể, vì có thể không có thay đổi
+        'variants.*.mau' => 'required_with:variants.*|nullable|string',
+        'variants.*.kichco' => 'required_with:variants.*|nullable|string',
+        'variants.*.gia' => 'required_with:variants.*|nullable|numeric',
+    ]);
+
+    // Cập nhật thông tin sản phẩm
+    $product->update([
+        'tensanpham' => $request->tensanpham,
+        'mota' => $request->mota,
+        'sphot' => (int) $request->sphot,
+        'iddanhmuc' => $request->iddanhmuc
+    ]);
+
+    // Kiểm tra xem có gửi biến thể mới không
+    if ($request->has('variants') && count($request->variants) > 0) {
+        // Chỉ thêm các biến thể mới mà không xóa các biến thể cũ
+        foreach ($request->variants as $variant) {
+            $product->variants()->firstOrCreate($variant); // Sử dụng firstOrCreate để không tạo trùng biến thể
+        }
+    }
+
+    // Trả về phản hồi JSON
+    return response()->json([
+        'message' => 'Cập nhật sản phẩm thành công!',
+        'product' => $product
+    ], 200);
+}
+
 
 
     /**
