@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ChatController;
+
 use App\Models\Category;
 
 
@@ -50,3 +52,8 @@ Route::prefix('admin')->group(function (): void {
 
 //đơn hàng
 Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/orders/{id}', [OrderController::class, 'show']); // Lấy chi tiết đơn hàng
+Route::put('/orders/{id}/status', [OrderController::class, 'updateStatus']);
+
+
+Route::post('/chat', [ChatController::class, 'chat']);

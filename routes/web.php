@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlindboxController;
 use App\Http\Controllers\TeddyController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/search', [HomeController::class, 'search'])->name('search');
@@ -37,6 +38,9 @@ Route::get('/test-api', function () {
 
 
 //Admin
+
+Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
+
 Route::get('/danhmuc', [CategoryController::class, 'viewDanhMuc']);
 
 Route::get('/danhmuc/create', [CategoryController::class, 'viewThemDanhMuc'])->name('danhmuc.create');

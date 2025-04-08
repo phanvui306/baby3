@@ -1,95 +1,110 @@
-<!DOCTYPE html>
-<html lang="vi" ng-app="myApp">
+@extends('admin.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm Sản Phẩm</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-</head>
 
-<body ng-controller="SanPhamController">
+@section('content')
 
-    <h1>Thêm Sản Phẩm</h1>
+    <body ng-controller="SanPhamController">
 
-    <label for="tensanpham">Tên sản phẩm</label>
-    <input type="text" ng-model="sanpham.tensanpham" placeholder="Nhập tên sản phẩm" required>
+        <h1>Cập nhật sản phẩm</h1>
+        <div class="form">
+            <form class="product-form">
+                <div class="form-group">
+                    <label for="tensanpham">Tên sản phẩm</label>
+                    <input type="text" id="tensanpham" placeholder="Nhập tên sản phẩm" ng-model="sanpham.tensanpham"
+                        required>
+                </div>
 
-    <label for="mota">Mô tả</label>
-    <textarea ng-model="sanpham.mota" placeholder="Nhập mô tả"></textarea>
+                <div class="form-group">
+                    <label for="loai">Loại</label>
+                    <select id="loai" ng-model="sanpham.sphot">
+                        <option value="">Chọn loại</option>
 
-    <label for="danhmuc">Chọn danh mục</label>
-    <select ng-model="sanpham.iddanhmuc" ng-options="danhmuc.id as danhmuc.tendanhmuc for danhmuc in danhmucs" required>
-        <option value="">Chọn danh mục</option>
-    </select>
+                        <option value="1">Có</option>
+                        <option value="0">Không</option>
+                    </select>
+                </div>
 
-    <h2>Thêm Biến Thể</h2>
-    <div ng-repeat="variant in sanpham.variants">
-        <label for="mau">Màu sắc:</label>
-        <input type="text" ng-model="variant.mau" placeholder="Nhập màu sắc" required>
+                <div class="form-group">
+                    <label for="mota">Mô tả</label>
+                    <textarea id="mota" cols="30" rows="10" ng-model="sanpham.mota" placeholder="Nhập mô tả"></textarea>
+                </div>
 
-        <label for="kichco">Kích thước:</label>
-        <input type="text" ng-model="variant.kichco" placeholder="Nhập kích thước" required>
+                <div class="form-group">
+                    <label for="danhmuc">Chọn danh mục</label>
+                    <select id="danhmuc" ng-model="sanpham.iddanhmuc"
+                        ng-options="danhmuc.id as danhmuc.tendanhmuc for danhmuc in danhmucs">
+                        <option value="">Chọn danh mục</option>
+                    </select>
+                </div>
 
-        <label for="gia">Giá:</label>
-        <input type="number" ng-model="variant.gia" placeholder="Nhập giá" required>
+                <div class="variants">
+                    <div ng-repeat="variant in sanpham.variants" class="variant-group">
+                        <label for="mau">Màu sắc:</label>
+                        <input type="text" ng-model="variant.mau" placeholder="Nhập màu sắc">
 
-        <button ng-click="xoaBienThe($index)">Xóa</button>
-    </div>
+                        <label for="kichco">Kích thước:</label>
+                        <input type="text" ng-model="variant.kichco" placeholder="Nhập kích thước">
 
-    <button ng-click="themBienThe()">+ Thêm Biến Thể</button>
+                        <label for="gia">Giá:</label>
+                        <input type="number" ng-model="variant.gia" placeholder="Nhập giá">
 
-    <button ng-click="themSanPham()"
-        ng-disabled="!sanpham.tensanpham || !sanpham.iddanhmuc || sanpham.variants.length === 0">Thêm Sản Phẩm</button>
+                        <button ng-click="xoaBienThe($index)" class="btn-delete">Xoá</button>
+                    </div>
+                </div>
 
-    <p style="color: green;" ng-if="thanhCong">@{{ thanhCong }}</p>
+                <button ng-click="themBienThe()" class="btn btn-add">Thêm biến thể</button>
+                <button ng-click="themSanPham()" class="btn btn-submit">Cập nhật sản phẩm</button>
 
-    <script>
-        var app = angular.module('myApp', []);
+                <p class="success-message" ng-if="thanhCong">@{{ thanhCong }}</p>
+            </form>
+        </div>
 
-        app.controller('SanPhamController', function($scope, $http) {
-            $scope.sanpham = {
-                variants: []
-            };
 
-            // Lấy danh mục
-            $http.get("http://127.0.0.1:8000/api/categories")
-            .then(function(response){
-                $scope.danhmucs = response.data.danhmucs;
-            })
-                
+        <script>
+            var app = angular.module('myApp', []);
 
-            // Thêm biến thể
-            $scope.themBienThe = () => $scope.sanpham.variants.push({
-                mau: '',
-                kichco: '',
-                gia: ''
+            app.controller('SanPhamController', function($scope, $http) {
+                $scope.sanpham = {
+                    variants: []
+                };
+
+                // Lấy danh mục
+                $http.get("http://127.0.0.1:8000/api/categories")
+                    .then(function(response) {
+                        $scope.danhmucs = response.data.danhmucs;
+                    })
+
+
+                // Thêm biến thể
+                $scope.themBienThe = () => $scope.sanpham.variants.push({
+                    mau: '',
+                    kichco: '',
+                    gia: ''
+                });
+
+                // Xóa biến thể
+                $scope.xoaBienThe = (index) => $scope.sanpham.variants.splice(index, 1);
+
+                // Thêm sản phẩm
+                $scope.themSanPham = () => {
+                    if ($scope.sanpham.variants.length === 0) {
+                        alert('Vui lòng thêm ít nhất một biến thể');
+                        return;
+                    }
+
+                    $http.post('http://127.0.0.1:8000/api/products', $scope.sanpham)
+                        .then(function(response) {
+                            $scope.thanhCong = 'Sản phẩm đã được tạo thành công!';
+                            $scope.sanpham = {
+                                variants: []
+                            }; // Reset form
+                        })
+                        .catch(function(error) {
+                            console.error('Có lỗi xảy ra:', error);
+                            alert('Có lỗi xảy ra: ' + error.message);
+                        });
+                };
+
             });
-
-            // Xóa biến thể
-            $scope.xoaBienThe = (index) => $scope.sanpham.variants.splice(index, 1);
-
-            // Thêm sản phẩm
-            $scope.themSanPham = () => {
-    if ($scope.sanpham.variants.length === 0) {
-        alert('Vui lòng thêm ít nhất một biến thể');
-        return;
-    }
-
-    $http.post('http://127.0.0.1:8000/api/products', $scope.sanpham)
-        .then(function(response) {
-            $scope.thanhCong = 'Sản phẩm đã được tạo thành công!';
-            $scope.sanpham = { variants: [] }; // Reset form
-        })
-        .catch(function(error) {
-            console.error('Có lỗi xảy ra:', error);
-            alert('Có lỗi xảy ra: ' + error.message);
-        });
-};
-
-        });
-    </script>
-
-</body>
-
-</html>
+        </script>
+    @endsection
