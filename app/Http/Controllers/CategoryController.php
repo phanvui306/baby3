@@ -22,12 +22,12 @@ class CategoryController extends Controller
 
     public function viewDanhMuc()
     {
-        return view('dsdanhmuc');
+        return view('admin.dsdanhmuc');
     }
     //
     public function them()
     {
-        return view('danhmuc'); // Trả về view thêm danh mục
+        return view('admin.danhmuc'); // Trả về view thêm danh mục
     }
 
     // Hiển thị trang thêm danh mục

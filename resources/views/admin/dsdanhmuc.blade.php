@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="vi" ng-app="myApp">
+@extends('admin.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Mục</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-</head>
 
+@section('content')
 <body ng-controller="DanhMucController">
     <h1>Danh sách danh mục</h1>
     <table>
@@ -23,6 +17,7 @@
             <tr ng-repeat='danhmuc in danhmucs'>
                 <td>@{{ danhmuc.id }}</td>
                 <td>@{{ danhmuc.tendanhmuc }}</td>
+                <td>@{{ danhmuc.create }}</td>
                 <td>
                     <a href="/danhmuc/edit?id= @{{ danhmuc.id }}"><button>Sửa</button></a>
                     <button ng-click="xoaDanhMuc(danhmuc.id)">Xóa</button>
@@ -58,6 +53,4 @@
         });
         
     </script>
-</body>
-
-</html>
+@endsection

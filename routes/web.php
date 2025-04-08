@@ -41,7 +41,7 @@ Route::get('/test-api', function () {
 
 Route::get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-Route::get('/danhmuc', [CategoryController::class, 'viewDanhMuc']);
+Route::get('/danhmuc', [CategoryController::class, 'viewDanhMuc'])->name('danhmucs');
 
 Route::get('/danhmuc/create', [CategoryController::class, 'viewThemDanhMuc'])->name('danhmuc.create');
 
@@ -49,12 +49,12 @@ Route::get('/danhmuc/edit', function () {
     return view('admin.update_danhmuc');
 });
 
-Route::get('/orders', [ OrderController::class, 'viewDonHang']);
+Route::get('/orders', [ OrderController::class, 'viewDonHang'])->name('orders');
 
 
 
 
-Route::get('/products', [ProductController::class, 'viewProduct']);
+Route::get('/products', [ProductController::class, 'viewProduct'])->name('products');
 Route::get('/products/create', [ProductController::class, 'viewThemProduct'])->name('products.create');
 Route::get('product/edit/', [ProductController::class, 'viewEditProduct']);
 Route::get('/image/create', [ImageController::class,'viewThemImage']);

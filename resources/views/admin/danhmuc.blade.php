@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test API Thêm Danh Mục</title>
-</head>
-<body>
+@extends('admin.layout')
+
+
+@section('content')
 
     <h2>Thêm danh mục</h2>
 
@@ -16,5 +12,4 @@
         <button type="submit">Gửi</button>
     </form>
 
-</body>
-</html>
+@endsection
