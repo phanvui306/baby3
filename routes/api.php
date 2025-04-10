@@ -42,7 +42,7 @@ Route::get('/image', [ImageController::class,'index']);
 Route::post('/image', [ImageController::class,'themHinhAnh']);
 Route::put('/image/{id}', [ImageController::class, 'suaHinhAnh']);
 
-Route::prefix('admin')->group(function (): void {
+Route::prefix('admin')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
     Route::put('/orders/{id}', [OrderController::class, 'update']);
